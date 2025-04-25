@@ -68,7 +68,7 @@ jogador = Jogador()
 grupo = pygame.sprite.Group(jogador)
 obstaculos = pygame.sprite.Group()
 
-# Temporizador para obstáculos (evento a cada 1.5s)
+# Temporizador para obstáculos
 pygame.time.set_timer(pygame.USEREVENT, 1500)
 
 # Pontuação e tempo
@@ -76,7 +76,7 @@ pontos = 0
 inicio = pygame.time.get_ticks()
 
 rodando = True
-colidiu = False  # flag para indicar colisão
+colidiu = False 
 
 while rodando:
     for evento in pygame.event.get():
@@ -97,17 +97,17 @@ while rodando:
 
     # Checa colisão
     if not colidiu and pygame.sprite.spritecollide(jogador, obstaculos, False):
-        colidiu = True #COLIDIU 
+        colidiu = True #COLIDIU
 
 
-    # Atualiza a pontuação se o jogador passar pelos obstáculos
+
     if not colidiu:
         for o in obstaculos:
             if o.rect.right < jogador.rect.left and not hasattr(o, 'contado'):
                 pontos += 1
                 o.contado = True
 
-    # Calcula o tempo decorrido (em segundos)
+    # Calcula o tempo decorrido
     tempo = (pygame.time.get_ticks() - inicio) // 1000
 
     # Desenho da tela
@@ -116,7 +116,6 @@ while rodando:
     texto_info = fonte.render(f"Pontos: {pontos}   Tempo: {tempo}s", True, (255, 255, 255))
     tela.blit(texto_info, (10, 10))
 
-    # Caso haja colisão, exibe a tela de Game Over e pausa o jogo
     if colidiu:
         game_over_text = fonte_game_over.render("GAME OVER", True, (255, 0, 0))
         pos_x = LARGURA // 2 - game_over_text.get_width() // 2
